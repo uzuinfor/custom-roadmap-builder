@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>갓생 메이커 - 나만의 목표 달성 & 동적 로드맵 대시보드</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --purple: #8b5cf6;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
+        /* 🚀 상단 헤더 바 */
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 16px 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: 1.5px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preset-select-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preset-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border-color);
+            font-size: 14px;
+            font-weight: 700;
+            color: #334155;
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 15px;
+            font-size: 13.5px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+        .btn-primary { background: #2563eb; color: #ffffff; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-success { background: #10b981; color: #ffffff; }
+        .btn-success:hover { background: #059669; }
+        .btn-secondary { background: #e2e8f0; color: #334155; }
+        .btn-secondary:hover { background: #cbd5e1; }
+        .btn-danger { background: #ffe4e6; color: #e11d48; }
+        .btn-danger:hover { background: #fecdd3; }
+
+        /* 🏆 달성률 프로그레스 카드 */
+        .progress-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .progress-track {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            height: 16px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* 📌 탭 메뉴 */
+        .tab-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 10px;
+            font-size: 14px;
+            font-weight: 700;
+            background-color: #cbd5e1;
+            color: #475569;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 💳 메인 콘텐트 카드 */
+        .content-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1.5px solid var(--border-color);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 👑 배너 */
+        .hero-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff !important;
+            padding: 28px 32px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+        }
+
+        .hero-title {
+            font-size: 24px !important;
+            font-weight: 800 !important;
+            color: #ffffff !important;
+            margin: 0 0 8px 0 !important;
+            outline: none !important;
+        }
+
+        .hero-subtitle {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: #93c5fd !important;
+            margin: 0 !important;
+            outline: none !important;
+        }
+
+        /* ✏️ 수정 가능 텍스트 효과 */
+        .editable { outline: none; transition: background 0.15s ease; border-radius: 4px; padding: 2px 4px; }
+        .editable:hover {
+            background-color: #eff6ff !important;
+            box-shadow: 0 0 0 2px #3b82f6 !important;
+            cursor: pointer;
+        }
+        .hero-banner .editable:hover {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 0 0 2px #60a5fa !important;
+        }
+        .editable:focus {
+            background-color: #fef08a !important;
+            color: #0f172a !important;
+            box-shadow: 0 0 0 3px #eab308 !important;
+        }
+
+        /* 📑 섹션 헤더 & 동적 추가 버튼 */
+        .section-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 28px 0 14px 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0f172a;
+            border-left: 5px solid #2563eb;
+            padding-left: 12px;
+        }
+
+        /* 📋 테이블 */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .styled-table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        .styled-table td {
+            padding: 12px 14px;
+            font-size: 14px;
+            color: #0f172a;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: #ffffff;
+        }
+
+        .styled-table tr:nth-child(even) td { background-color: #f8fafc; }
+        tr.is-completed td { background-color: #f1f5f9 !important; color: #94a3b8 !important; text-decoration: line-through; }
+
+        .btn-action-sm {
+            padding: 3px 8px;
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            font-weight: 700;
+        }
+
+        /* 🗓️ 달별 & 주차별 카드 컨트롤러 */
+        .nav-switch-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .display-nav-title {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .dynamic-card {
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .dynamic-card-header {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 18px;
+            font-weight: 800;
+            font-size: 14.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dynamic-card.day-completed {
+            border: 2.5px solid #10b981;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
+        }
+
+        .dynamic-card.day-completed .dynamic-card-header { background: #059669; }
+
+        .card-complete-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .dynamic-card.day-completed .card-complete-btn { background: #ffffff; color: #059669; }
+
+        .custom-cb { width: 18px; height: 18px; cursor: pointer; accent-color: #2563eb; }
+
+        @media print {
+            body { background: white !important; padding: 0 !important; }
+            .header-nav, .tab-bar, .progress-card, .btn-action-sm, .nav-switch-bar { display: none !important; }
+            .content-card { box-shadow: none !important; border: none !important; padding: 0 !important; }
+            .tab-content { display: block !important; }
+            .editable:hover, .editable:focus { background: none !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- 🚀 상단 헤더 바 -->
+        <div class="header-nav">
+            <div class="brand-logo">
+                <span>🎯</span>
+                <span><strong>갓생 메이커</strong> (나만의 맞춤형 목표 대시보드)</span>
+            </div>
+            <div class="preset-select-group">
+                <label for="presetSelect" style="font-size: 13.5px; font-weight: 700; color: #475569;">추천 템플릿:</label>
+                <select id="presetSelect" class="preset-select" onchange="applyPreset(this.value)">
+                    <option value="english">🇬🇧 영어 스피킹 60일 완성</option>
+                    <option value="career">💼 자격증 & 이직 90일 로드맵</option>
+                    <option value="fitness">🏋️ 바디프로필 & 다이어트 루틴</option>
+                    <option value="sideincome">💰 부업 & 자동화 소득 100일</option>
+                </select>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="window.print()">🖨️ PDF 인쇄/저장</button>
+                <button class="btn btn-success" onclick="saveData()">💾 수동 저장</button>
+                <button class="btn btn-secondary" onclick="exportJSON()">📥 백업(JSON)</button>
+                <button class="btn btn-danger" onclick="resetData()">🔄 초기화</button>
+            </div>
+        </div>
+
+        <!-- 🏆 달성률 프로그레스 바 -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <span id="progress-title-display">🏆 나만의 목표 달성 현황</span>
+                <span id="progress-text" style="color: #34d399;">0 / 0 항목 완료 (0%)</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- 📌 탭 메뉴 -->
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="openTab('tab1', this)">🗓️ 마스터 로드맵</button>
+            <button class="tab-btn" onclick="openTab('tab2', this)">📅 달별(Month) 스케줄</button>
+            <button class="tab-btn" onclick="openTab('tab3', this)">⏰ 주간/일간 세부 타임라인</button>
+        </div>
+
+        <!-- 💳 메인 대시보드 -->
+        <div class="content-card">
+
+            <!-- TAB 1: 마스터 로드맵 -->
+            <div id="tab1" class="tab-content active">
+                <div class="hero-banner">
+                    <div class="hero-title editable" contenteditable="true" id="roadmap-hero-title">🇬🇧 영어 회화 & 오픽 AL 60일 완수 마스터 로드맵</div>
+                    <div class="hero-subtitle editable" contenteditable="true" id="roadmap-hero-sub">매일 1시간 AI 스피킹 연습 ➔ 30일 패턴 습득 ➔ 60일 오픽 AL 및 실전 회화 완성</div>
+                </div>
+
+                <div class="section-header-bar">
+                    <div class="section-title">1. 목표 단계별 마스터 실행 계획표</div>
+                    <button class="btn btn-secondary btn-action-sm" onclick="addMasterRow()">➕ 단계(행) 추가</button>
+                </div>
+                <table class="styled-table" id="master-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">단계</th>
+                            <th style="width: 25%;">핵심 마일스톤</th>
+                            <th>구체적 행동 지침 & 루틴 (클릭하여 자유 편집 가능)</th>
+                            <th style="width: 80px; text-align: center;">삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody id="master-table-body">
+                        <!-- 동적 생성 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TAB 2: 달별(Month) 주간 스케줄 -->
+            <div id="tab2" class="tab-content">
+                <div class="section-header-bar">
+                    <div class="section-title">📅 달별(Month) 주간 실천 계획표</div>
+                    <button class="btn btn-primary btn-action-sm" onclick="addMonthBlock()">➕ 새 월(Month) 추가</button>
+                </div>
+
+                <div class="nav-switch-bar">
+                    <button class="nav-switch-btn" onclick="prevMonth()">◀ 이전 달</button>
+                    <div class="display-nav-title" id="month-nav-title">Month 1 : 1개월차 목표</div>
+                    <button class="nav-switch-btn" onclick="nextMonth()">다음 달 ▶</button>
+                </div>
+
+                <div id="month-blocks-container">
+                    <!-- 동적 월 카드 영역 -->
+                </div>
+            </div>
+
+            <!-- TAB 3: 주간/일간 세부 타임라인 -->
+            <div id="tab3" class="tab-content">
+                <div class="section-header-bar">
+                    <div class="section-title">⏰ 주간 · 일간 세부 시간대별 타임라인</div>
+                    <button class="btn btn-success btn-action-sm" onclick="addTimelineCard()">➕ 새 타임라인 카드 추가</button>
+                </div>
+
+                <div id="timeline-cards-container">
+                    <!-- 동적 타임라인 카드 영역 -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // 템플릿 데이터 정의 (사용자가 선택하여 교체 가능)
+        const PRESETS = {
+            english: {
+                title: "🇬🇧 영어 회화 & 오픽 AL 60일 완수 마스터 로드맵",
+                sub: "매일 1시간 AI 스피킹 연습 ➔ 30일 패턴 습득 ➔ 60일 오픽 AL 및 실전 회화 완성",
+                master: [
+                    { step: "1단계 (1~15일)", goal: "기초 동사패턴 100개 습득", desc: "ChatGPT 및 AI 스피킹 앱(말해보카/스픽)으로 하루 5개 패턴 반복 입으로 중얼거리기" },
+                    { step: "2단계 (16~30일)", goal: "오픽 기출 스크립트 완성", desc: "자주 나오는 롤플레이 및 돌발 질문 20개 답변 본인 경험 바탕 섀도잉" },
+                    { step: "3단계 (31~60일)", goal: "실전 외국인 튜터링 & 시험", desc: "캠블리/링글 외국인 튜터와 주 3회 20분 프리토킹 ➔ 오픽 AL 응시 및 취득" }
+                ],
+                months: [
+                    { name: "1개월차 : 기초 패턴 & 섀도잉 암기", weeks: [
+                        { week: "1주차", goal: "기초 동사 30개 패턴", desc: "Be동사 및 일반동사 핵심 패턴 하루 3개씩 입에 착 붙도록 음성 녹음" },
+                        { week: "2주차", goal: "미드 섀도잉 10분", desc: "모던패밀리/프렌즈 1편 선정하여 10초 분량 100번 반복 따라하기" }
+                    ]},
+                    { name: "2개월차 : 실전 회화 & 오픽 시험", weeks: [
+                        { week: "3주차", goal: "롤플레이 템플릿", desc: "식당 예약, 쇼핑 환불 등 롤플레이 상황극 표현 15개 암기" },
+                        { week: "4주차", goal: "오픽 시험 & AL 취득", desc: "모의고사 3회 풀이 후 시험장 방문 ➔ AL 취득" }
+                    ]}
+                ],
+                timeline: [
+                    { day: "Day 1 (월) : 영어 스피킹 루틴 스타트", tasks: [
+                        { time: "08:00 ~ 08:30", desc: "출근/등교길 영어 팟캐스트 1편 들으며 섀도잉" },
+                        { time: "19:00 ~ 20:00", desc: "ChatGPT에 '영어 회화 파트너 역할해 줘' 입력 후 음성 대화 30분" },
+                        { time: "22:00 ~ 22:30", desc: "오늘 배운 영어 표현 3개 노출 일기 작성" }
+                    ]},
+                    { day: "Day 2 (화) : 미드 섀도잉 30분 훈련", tasks: [
+                        { time: "08:00 ~ 08:30", desc: "어제 공부한 핵심 표현 3개 복습" },
+                        { time: "19:00 ~ 20:00", desc: "미드 10초 영상 세부 발음 및 연음 섀도잉 50번" }
+                    ]}
+                ]
+            },
+            career: {
+                title: "💼 정보처리기사 & 이직 포트폴리오 90일 합격 로드맵",
+                sub: "필기 3주 ➔ 실기 4주 ➔ 포트폴리오 3주로 서류 합격률 80% 달성",
+                master: [
+                    { step: "1단계 (1~30일)", goal: "자격증 필기 합격", desc: "CBT 기출문제 5개년 3회독 반복 풀이" },
+                    { step: "2단계 (31~60일)", goal: "자격증 실기 완등", desc: "프로그래밍 언어(C, Java, Python) 및 SQL 단답형 서술 완벽 대비" },
+                    { step: "3단계 (61~90일)", goal: "이직 서류 & 면접", desc: "노션 포트폴리오 업그레이드 및 원티드/사람인 20곳 지원" }
+                ],
+                months: [
+                    { name: "1개월차 : 필기 합격 & 기초 이론", weeks: [
+                        { week: "1주차", goal: "기출문제 1~2개년", desc: "개념 요약집 읽고 기출문제 오답 노트 정리" }
+                    ]}
+                ],
+                timeline: [
+                    { day: "Day 1 (월) : 기출 1회독 풀기", tasks: [
+                        { time: "20:00 ~ 22:00", desc: "CBT 사이트에서 최근 기출 1회 풀고 틀린 문제 오답 정리" }
+                    ]}
+                ]
+            },
+            fitness: {
+                title: "🏋️ 체지방 -5kg & 체력 증진 60일 갓생 루틴",
+                sub: "주 4회 웨이트 + 식단 관리로 건강하고 탄탄한 몸 완성",
+                master: [
+                    { step: "1단계 (1~20일)", goal: "기초 체력 & 식단 적응", desc: "하루 단백질 100g 섭취 + 주 3회 헬스장 방문" },
+                    { step: "2단계 (21~40일)", goal: "체지방 집중 감량", desc: "유산소 30분 추가 + 정제당(음료수/과자) 완전 차단" },
+                    { step: "3단계 (41~60일)", goal: "눈바디 & 습관 정착", desc: "목표 체중 달성 및 주 4회 운동 습관 100% 안착" }
+                ],
+                months: [
+                    { name: "1개월차 : 주 3회 운동 습관 형성", weeks: [
+                        { week: "1주차", goal: "헬스장 3회 출석", desc: "스쿼트, 데드리프트, 벤치프레스 3대 운동 자세 교정" }
+                    ]}
+                ],
+                timeline: [
+                    { day: "Day 1 (월) : 하체 운동 & 유산소", tasks: [
+                        { time: "07:00 ~ 08:00", desc: "아침 공복 아메리카노 + 헬스장 하체 웨이트 45분" },
+                        { time: "12:00 ~ 13:00", desc: "닭가슴살 샐러드 점심 식사" }
+                    ]}
+                ]
+            },
+            sideincome: {
+                title: "💰 무자본 AI 부업 & 패시브 소득 100일 로드맵",
+                sub: "AI 툴로 콘텐츠 양산 ➔ 제휴마케팅 및 무인 전자책 판매로 월 100만 원 수입",
+                master: [
+                    { step: "1단계 (1~30일)", goal: "AI 콘텐츠 세팅", desc: "CapCut + ChatGPT로 숏폼 30개 제작 및 업로드" },
+                    { step: "2단계 (31~60일)", goal: "제휴 수수료 수령", desc: "쿠팡 파트너스 / 제휴 링크 연동으로 월 50만 원 수익 달성" },
+                    { step: "3단계 (61~100일)", goal: "전자책 무인 판매", desc: "크몽/텀블벅에 AI 노하우 전자책 올리고 월 100만 원 달성" }
+                ],
+                months: [
+                    { name: "1개월차 : 숏폼 30개 시딩", weeks: [
+                        { week: "1주차", goal: "채널 4개 세팅", desc: "유튜브, 인스타, 틱톡, 블로그 채널 생성 및 숏폼 5개 업로드" }
+                    ]}
+                ],
+                timeline: [
+                    { day: "Day 1 (월) : 첫 AI 숏폼 제작", tasks: [
+                        { time: "14:00 ~ 17:00", desc: "ChatGPT 대본 추출 후 CapCut AI 성우 얹어 숏폼 1호 완성" }
+                    ]}
+                ]
+            }
+        };
+
+        let activeData = null;
+        let currentMonthIdx = 0;
+
+        function applyPreset(presetKey) {
+            const preset = PRESETS[presetKey] || PRESETS['english'];
+            activeData = JSON.parse(JSON.stringify(preset));
+            currentMonthIdx = 0;
+            renderAll();
+            saveData();
+        }
+
+        function renderAll() {
+            if (!activeData) return;
+
+            // 히어로 배너
+            document.getElementById('roadmap-hero-title').innerText = activeData.title;
+            document.getElementById('roadmap-hero-sub').innerText = activeData.sub;
+
+            // 1. 마스터 테이블 렌더링
+            const masterTbody = document.getElementById('master-table-body');
+            masterTbody.innerHTML = '';
+            activeData.master.forEach((m, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="editable" contenteditable="true" oninput="activeData.master[${idx}].step=this.innerText">${m.step}</td>
+                    <td class="editable" contenteditable="true" oninput="activeData.master[${idx}].goal=this.innerText"><strong>${m.goal}</strong></td>
+                    <td class="editable" contenteditable="true" oninput="activeData.master[${idx}].desc=this.innerText">${m.desc}</td>
+                    <td style="text-align: center;"><button class="btn-action-sm btn-danger" onclick="deleteMasterRow(${idx})">🗑️</button></td>
+                `;
+                masterTbody.appendChild(tr);
+            });
+
+            // 2. 월별 카드 렌더링
+            renderMonthBlocks();
+
+            // 3. 타임라인 렌더링
+            renderTimelineCards();
+
+            updateProgress();
+        }
+
+        function addMasterRow() {
+            activeData.master.push({ step: "새 단계", goal: "새 목표", desc: "세부 설명을 입력하세요." });
+            renderAll();
+            saveData();
+        }
+
+        function deleteMasterRow(idx) {
+            activeData.master.splice(idx, 1);
+            renderAll();
+            saveData();
+        }
+
+        function renderMonthBlocks() {
+            const container = document.getElementById('month-blocks-container');
+            container.innerHTML = '';
+
+            if (activeData.months.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">등록된 월(Month)이 없습니다. 상단의 [➕ 새 월 추가] 버튼을 누르세요.</p>';
+                document.getElementById('month-nav-title').innerText = "등록된 월 없음";
+                return;
+            }
+
+            if (currentMonthIdx >= activeData.months.length) currentMonthIdx = activeData.months.length - 1;
+            if (currentMonthIdx < 0) currentMonthIdx = 0;
+
+            const m = activeData.months[currentMonthIdx];
+            document.getElementById('month-nav-title').innerText = m.name;
+
+            const mBlock = document.createElement('div');
+            mBlock.className = 'dynamic-card';
+            
+            let weeksHTML = '';
+            m.weeks.forEach((w, wIdx) => {
+                weeksHTML += `
+                    <tr>
+                        <td style="width: 15%;" class="editable" contenteditable="true" oninput="activeData.months[${currentMonthIdx}].weeks[${wIdx}].week=this.innerText"><strong>${w.week}</strong></td>
+                        <td style="width: 25%;" class="editable" contenteditable="true" oninput="activeData.months[${currentMonthIdx}].weeks[${wIdx}].goal=this.innerText"><span>${w.goal}</span></td>
+                        <td class="editable" contenteditable="true" oninput="activeData.months[${currentMonthIdx}].weeks[${wIdx}].desc=this.innerText">${w.desc}</td>
+                        <td style="width: 60px; text-align: center;"><button class="btn-action-sm btn-danger" onclick="deleteWeekRow(${currentMonthIdx}, ${wIdx})">🗑️</button></td>
+                    </tr>
+                `;
+            });
+
+            mBlock.innerHTML = `
+                <div class="dynamic-card-header">
+                    <span class="editable" contenteditable="true" oninput="activeData.months[${currentMonthIdx}].name=this.innerText">${m.name}</span>
+                    <div>
+                        <button class="btn-action-sm btn-primary" onclick="addWeekRow(${currentMonthIdx})">➕ 주차 추가</button>
+                        <button class="btn-action-sm btn-danger" onclick="deleteMonthBlock(${currentMonthIdx})">🗑️ 이 월 삭제</button>
+                    </div>
+                </div>
+                <div style="padding: 16px;">
+                    <table class="styled-table" style="margin-bottom: 0;">
+                        <thead>
+                            <tr>
+                                <th>주차</th>
+                                <th>목표</th>
+                                <th>세부 실천 미션 (클릭하여 수정)</th>
+                                <th style="text-align: center;">삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>${weeksHTML}</tbody>
+                    </table>
+                </div>
+            `;
+            container.appendChild(mBlock);
+        }
+
+        function prevMonth() {
+            if (currentMonthIdx > 0) { currentMonthIdx--; renderMonthBlocks(); }
+        }
+
+        function nextMonth() {
+            if (currentMonthIdx < activeData.months.length - 1) { currentMonthIdx++; renderMonthBlocks(); }
+        }
+
+        function addMonthBlock() {
+            const newMNum = activeData.months.length + 1;
+            activeData.months.push({
+                name: `${newMNum}개월차 : 새 목표 설정`,
+                weeks: [ { week: "1주차", goal: "주간 목표 입력", desc: "할 일을 입력하세요." } ]
+            });
+            currentMonthIdx = activeData.months.length - 1;
+            renderMonthBlocks();
+            saveData();
+        }
+
+        function deleteMonthBlock(mIdx) {
+            if (confirm('이 월(Month) 전체를 삭제하시겠습니까?')) {
+                activeData.months.splice(mIdx, 1);
+                renderMonthBlocks();
+                saveData();
+            }
+        }
+
+        function addWeekRow(mIdx) {
+            const wNum = activeData.months[mIdx].weeks.length + 1;
+            activeData.months[mIdx].weeks.push({ week: `${wNum}주차`, goal: "새 주간 목표", desc: "세부 할 일을 입력하세요." });
+            renderMonthBlocks();
+            saveData();
+        }
+
+        function deleteWeekRow(mIdx, wIdx) {
+            activeData.months[mIdx].weeks.splice(wIdx, 1);
+            renderMonthBlocks();
+            saveData();
+        }
+
+        // 3. 타임라인 렌더링
+        function renderTimelineCards() {
+            const container = document.getElementById('timeline-cards-container');
+            container.innerHTML = '';
+
+            if (activeData.timeline.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">등록된 타임라인이 없습니다. 상단의 [➕ 새 타임라인 카드 추가] 버튼을 누르세요.</p>';
+                return;
+            }
+
+            activeData.timeline.forEach((t, tIdx) => {
+                const card = document.createElement('div');
+                card.className = `dynamic-card ${t.completed ? 'day-completed' : ''}`;
+                card.id = `tcard-${tIdx}`;
+
+                let tasksHTML = '';
+                t.tasks.forEach((tk, tkIdx) => {
+                    tasksHTML += `
+                        <tr class="${tk.checked ? 'is-completed' : ''}">
+                            <td style="width: 50px; text-align: center;">
+                                <input type="checkbox" class="custom-cb" ${tk.checked ? 'checked' : ''} onchange="toggleTaskCheck(${tIdx}, ${tkIdx}, this)">
+                            </td>
+                            <td style="width: 140px;" class="editable" contenteditable="true" oninput="activeData.timeline[${tIdx}].tasks[${tkIdx}].time=this.innerText">${tk.time}</td>
+                            <td class="editable" contenteditable="true" oninput="activeData.timeline[${tIdx}].tasks[${tkIdx}].desc=this.innerText">${tk.desc}</td>
+                            <td style="width: 60px; text-align: center;"><button class="btn-action-sm btn-danger" onclick="deleteTaskRow(${tIdx}, ${tkIdx})">🗑️</button></td>
+                        </tr>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="dynamic-card-header">
+                        <span class="editable" contenteditable="true" oninput="activeData.timeline[${tIdx}].day=this.innerText">${t.day}</span>
+                        <div>
+                            <button class="card-complete-btn" onclick="toggleCardComplete(${tIdx})">${t.completed ? '🏆 완주 성공! ✅' : '오늘 완주 성공! ☑️'}</button>
+                            <button class="btn-action-sm btn-primary" onclick="addTaskRow(${tIdx})">➕ 세부시간 추가</button>
+                            <button class="btn-action-sm btn-danger" onclick="deleteTimelineCard(${tIdx})">🗑️ 카드 삭제</button>
+                        </div>
+                    </div>
+                    <table class="styled-table" style="margin-bottom: 0; border: none;">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">완료</th>
+                                <th style="width: 140px;">시간대</th>
+                                <th>시간별 세부 할 일 (클릭 수정)</th>
+                                <th style="text-align: center;">삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tasksHTML}</tbody>
+                    </table>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addTimelineCard() {
+            const dNum = activeData.timeline.length + 1;
+            activeData.timeline.push({
+                day: `Day ${dNum} : 새 일정`,
+                completed: false,
+                tasks: [ { time: "09:00 ~ 10:00", desc: "할 일을 입력하세요.", checked: false } ]
+            });
+            renderTimelineCards();
+            updateProgress();
+            saveData();
+        }
+
+        function deleteTimelineCard(tIdx) {
+            activeData.timeline.splice(tIdx, 1);
+            renderTimelineCards();
+            updateProgress();
+            saveData();
+        }
+
+        function addTaskRow(tIdx) {
+            activeData.timeline[tIdx].tasks.push({ time: "시간대 입력", desc: "새 할 일", checked: false });
+            renderTimelineCards();
+            updateProgress();
+            saveData();
+        }
+
+        function deleteTaskRow(tIdx, tkIdx) {
+            activeData.timeline[tIdx].tasks.splice(tkIdx, 1);
+            renderTimelineCards();
+            updateProgress();
+            saveData();
+        }
+
+        function toggleTaskCheck(tIdx, tkIdx, cb) {
+            activeData.timeline[tIdx].tasks[tkIdx].checked = cb.checked;
+            const tr = cb.closest('tr');
+            if (cb.checked) tr.classList.add('is-completed');
+            else tr.classList.remove('is-completed');
+            updateProgress();
+            saveData();
+        }
+
+        function toggleCardComplete(tIdx) {
+            const isComp = activeData.timeline[tIdx].completed;
+            activeData.timeline[tIdx].completed = !isComp;
+            activeData.timeline[tIdx].tasks.forEach(tk => tk.checked = !isComp);
+            renderTimelineCards();
+            updateProgress();
+            saveData();
+        }
+
+        function updateProgress() {
+            let totalTasks = 0;
+            let completedTasks = 0;
+
+            activeData.timeline.forEach(t => {
+                t.tasks.forEach(tk => {
+                    totalTasks++;
+                    if (tk.checked) completedTasks++;
+                });
+            });
+
+            const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-text').innerText = `${completedTasks} / ${totalTasks} 항목 완료 (${percent}%)`;
+        }
+
+        function openTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function saveData() {
+            activeData.title = document.getElementById('roadmap-hero-title').innerText;
+            activeData.sub = document.getElementById('roadmap-hero-sub').innerText;
+            localStorage.setItem('godsaeng_custom_roadmap_v1', JSON.stringify(activeData));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('godsaeng_custom_roadmap_v1');
+            if (saved) {
+                activeData = JSON.parse(saved);
+                renderAll();
+            } else {
+                applyPreset('english');
+            }
+        }
+
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(activeData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `godsaeng_roadmap_${Date.now()}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function resetData() {
+            if (confirm('모든 편집 내용이 초기화되고 기본 템플릿으로 돌아갑니다.')) {
+                localStorage.removeItem('godsaeng_custom_roadmap_v1');
+                applyPreset('english');
+            }
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>
