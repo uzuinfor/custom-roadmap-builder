@@ -379,7 +379,6 @@
 
         .custom-cb { width: 17px; height: 17px; cursor: pointer; accent-color: #2563eb; }
 
-        /* 📸 커뮤니티 갓생 인증 피드 스타일 */
         .feed-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -458,7 +457,6 @@
             font-size: 11.5px;
         }
 
-        /* 모달 팝업 */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -512,7 +510,7 @@
         <div class="header-nav">
             <div class="brand-logo">
                 <span>🎯</span>
-                <span><strong>갓생 메이커</strong> (공유 인증 피드 대시보드)</span>
+                <span><strong>갓생 메이커</strong> (주간/월간 넘김 대시보드)</span>
             </div>
             <div class="preset-select-group">
                 <label for="presetSelect" style="font-size: 13px; font-weight: 700;">추천 템플릿:</label>
@@ -532,7 +530,6 @@
             </div>
         </div>
 
-        <!-- 📐 2컬럼 레이아웃 (좌: 메인 대시보드 | 우: 사이드 위젯 패널) -->
         <div class="main-layout">
 
             <!-- 좌측 메인 대시보드 -->
@@ -542,7 +539,7 @@
                     <button class="tab-btn active" onclick="openTab('tab1', this)">🗓️ 마스터 로드맵</button>
                     <button class="tab-btn" onclick="openTab('tab2', this)">📅 달별(Month) 스케줄</button>
                     <button class="tab-btn" onclick="openTab('tab3', this)">⏰ 주간(Week) 타임라인</button>
-                    <button class="tab-btn" style="color: #ec4899; font-weight: 800;" onclick="openTab('tab4', this)">🔥 실시간 갓생 인증 피드</button>
+                    <button class="tab-btn" style="color: #ec4899; font-weight: 800;" onclick="openTab('tab4', this)">🔥 실시간 갓생 피드</button>
                 </div>
 
                 <!-- TAB 1: 마스터 로드맵 -->
@@ -581,7 +578,7 @@
                     <div class="nav-switch-bar">
                         <button class="btn btn-secondary btn-action-sm" onclick="prevMonth()">◀ 이전 달</button>
                         <div class="display-nav-title" id="month-nav-title">Month 1 : 1개월차 목표</div>
-                        <button class="btn btn-secondary btn-action-sm" onclick="nextMonth()">다음 달 ▶</button>
+                        <button class="btn btn-primary btn-action-sm" onclick="nextMonth()">다음 달 ▶ (자동 추가)</button>
                     </div>
 
                     <div id="month-blocks-container">
@@ -593,13 +590,13 @@
                 <div id="tab3" class="tab-content">
                     <div class="section-header-bar">
                         <div class="section-title">⏰ 주간(Week) 일주일 단위 세부 타임라인</div>
-                        <button class="btn btn-success btn-action-sm" onclick="addTimelineCard()">➕ 새 카드 추가</button>
+                        <button class="btn btn-success btn-action-sm" onclick="addTimelineCard()">➕ 새 하루 카드 추가</button>
                     </div>
 
                     <div class="nav-switch-bar">
                         <button class="btn btn-secondary btn-action-sm" onclick="prevWeek()">◀ 이전 주 (Previous Week)</button>
                         <div class="display-nav-title" id="week-nav-title">Week 1 : 1주차 타임라인</div>
-                        <button class="btn btn-secondary btn-action-sm" onclick="nextWeek()">다음 주 ▶ (Next Week)</button>
+                        <button class="btn btn-primary btn-action-sm" onclick="nextWeek()">다음 주 ▶ (자동 연속 생성)</button>
                     </div>
 
                     <div id="timeline-cards-container">
@@ -607,7 +604,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: 🔥 실시간 갓생러 공유 인증 피드 (Community Auth Wall) -->
+                <!-- TAB 4: 🔥 실시간 갓생러 공유 인증 피드 -->
                 <div id="tab4" class="tab-content">
                     <div class="section-header-bar">
                         <div class="section-title">🔥 갓생러 실시간 공유 인증 피드</div>
@@ -623,8 +620,6 @@
 
             <!-- 우측 사이드 위젯 패널 -->
             <div class="sidebar-panel">
-
-                <!-- 🏆 달성률 미니 카드 -->
                 <div class="progress-side-card">
                     <div class="progress-header">
                         <span id="progress-title-display">🏆 목표 완주율</span>
@@ -635,31 +630,26 @@
                     </div>
                 </div>
 
-                <!-- 🌱 아기자기 미니 잔디밭 위젯 -->
                 <div class="side-widget-card">
                     <div class="widget-title">
                         <span>🌱 갓생 미니 잔디 (28일)</span>
                         <span style="font-size: 11.5px; color: #10b981;" id="streak-badge-text">🔥 0일 완주 중</span>
                     </div>
-                    <div class="mini-grass-grid" id="mini-grass-grid">
-                        <!-- 28개 콤팩트 미니 잔디 도트 동적 생성 -->
-                    </div>
+                    <div class="mini-grass-grid" id="mini-grass-grid"></div>
                 </div>
 
-                <!-- 📸 공유 인증 게시판 바로가기 미니 카드 -->
                 <div class="side-widget-card" style="text-align: center; background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-color: #fbcfe8;">
                     <div style="font-size: 13px; font-weight: 800; color: #be185d; margin-bottom: 6px;">🔥 갓생러 공유 인증 피드</div>
                     <p style="font-size: 11.5px; color: #9d174d; margin: 0 0 10px 0;">오늘 달성한 갓생 인증샷 공유하기!</p>
                     <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 6px;" onclick="openShareModal()">인증샷 게시판에 올리기</button>
                 </div>
-
             </div>
 
         </div>
 
     </div>
 
-    <!-- 📸 인스타그램 스토리 인증 팝업 모달 -->
+    <!-- 모달들 -->
     <div class="modal-overlay" id="instaModal">
         <div class="modal-card">
             <div class="insta-story-card" id="instaCard">
@@ -673,20 +663,38 @@
         </div>
     </div>
 
-    <!-- 📤 커뮤니티 인증샷 올리기 모달 -->
     <div class="modal-overlay" id="shareModal">
         <div class="modal-card">
             <h3 style="margin-top: 0; font-size: 16px; color: #0f172a;">📸 갓생 공유 피드에 인증샷 올리기</h3>
             <input type="text" id="share-nickname" placeholder="닉네임 (예: 갓생살자)" style="width: 100%; padding: 8px 12px; margin-bottom: 10px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13px;">
-            <textarea id="share-msg" placeholder="오늘 달성한 소감 & 한줄 각오를 적어주세요! (예: 오픽 30분 스피킹 완주 성공! 🔥)" style="width: 100%; height: 70px; padding: 8px 12px; margin-bottom: 14px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13px; resize: none;"></textarea>
+            <textarea id="share-msg" placeholder="오늘 달성한 소감 & 한줄 각오를 적어주세요!" style="width: 100%; height: 70px; padding: 8px 12px; margin-bottom: 14px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13px; resize: none;"></textarea>
             <div style="display: flex; gap: 8px;">
                 <button class="btn btn-secondary" style="flex: 1;" onclick="closeShareModal()">취소</button>
-                <button class="btn btn-primary" style="flex: 1;" onclick="submitShareFeed()">🚀 인증 피드 게시</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="submitShareFeed()">🚀 게시글 등록</button>
             </div>
         </div>
     </div>
 
     <script>
+        // 8주차 (56일치) 풍부한 기본 타임라인 데이터
+        function generateRichTimeline() {
+            const days = ["월", "화", "수", "목", "금", "토", "일"];
+            const timeline = [];
+            for (let i = 1; i <= 56; i++) {
+                const dayName = days[(i - 1) % 7];
+                const weekNum = Math.ceil(i / 7);
+                timeline.push({
+                    day: `Day ${i < 10 ? '0' + i : i} (${weekNum}주차 ${dayName}) : 루틴 실행`,
+                    completed: false,
+                    tasks: [
+                        { time: "08:00 ~ 08:30", desc: `${weekNum}주차 핵심 공부 / 섀도잉`, checked: false },
+                        { time: "19:00 ~ 20:00", desc: "실전 미션 수행 및 복습", checked: false }
+                    ]
+                });
+            }
+            return timeline;
+        }
+
         const PRESETS = {
             english: {
                 title: "🇬🇧 영어 회화 & 오픽 AL 60일 완수 마스터 로드맵",
@@ -699,48 +707,46 @@
                 months: [
                     { name: "1개월차 : 기초 패턴 & 섀도잉", weeks: [
                         { week: "1주차", goal: "기초 동사 30개 패턴", desc: "Be동사 및 핵심 패턴 음성 녹음" },
-                        { week: "2주차", goal: "미드 섀도잉 10분", desc: "미드 1편 10초 분량 100번 따라하기" }
+                        { week: "2주차", goal: "미드 섀도잉 10분", desc: "미드 1편 10초 분량 100번 따라하기" },
+                        { week: "3주차", goal: "동사 변형 패턴 50개", desc: "과거형 및 완료형 입으로 숙달" },
+                        { week: "4주차", goal: "자유 프리토킹 연습", desc: "AI와 20분 무자막 스피킹" }
+                    ]},
+                    { name: "2개월차 : 실전 회화 & 오픽 시험", weeks: [
+                        { week: "5주차", goal: "롤플레이 템플릿", desc: "상황극 표현 15개 암기" },
+                        { week: "6주차", goal: "돌발질문 답변 훈련", desc: "돌발 10가지 주제 대응" },
+                        { week: "7주차", goal: "실전 모의고사 3회", desc: "시간 조절 모의테스트" },
+                        { week: "8주차", goal: "오픽 시험 & AL 취득", desc: "시험장 응시 후 AL 완성" }
                     ]}
                 ],
-                timeline: [
-                    { day: "Day 1 (월) : 영어 스피킹 루틴 스타트", tasks: [
-                        { time: "08:00 ~ 08:30", desc: "출근길 팟캐스트 섀도잉" },
-                        { time: "19:00 ~ 20:00", desc: "ChatGPT 음성 대화 30분" }
-                    ]},
-                    { day: "Day 2 (화) : 미드 섀도잉 훈련", tasks: [
-                        { time: "08:00 ~ 08:30", desc: "핵심 표현 3개 복습" },
-                        { time: "19:00 ~ 20:00", desc: "미드 섀도잉 훈련" }
-                    ]}
-                ]
+                timeline: generateRichTimeline()
             },
             career: {
                 title: "💼 정보처리기사 & 이직 포트폴리오 90일 합격 로드맵",
                 sub: "필기 3주 ➔ 실기 4주 ➔ 포트폴리오 3주로 합격률 80% 달성",
                 master: [ { step: "1단계 (1~30일)", goal: "자격증 필기 합격", desc: "CBT 기출 5개년 3회독" } ],
                 months: [ { name: "1개월차 : 필기 합격", weeks: [ { week: "1주차", goal: "기출 1~2개년", desc: "기출 오답 정리" } ] } ],
-                timeline: [ { day: "Day 1 (월) : 기출 풀기", tasks: [ { time: "20:00 ~ 22:00", desc: "CBT 기출 풀기" } ] } ]
+                timeline: generateRichTimeline()
             },
             fitness: {
                 title: "🏋️ 체지방 -5kg & 체력 증진 60일 갓생 루틴",
                 sub: "주 4회 웨이트 + 식단 관리로 탄탄한 몸 완성",
                 master: [ { step: "1단계 (1~20일)", goal: "기초 체력 식단", desc: "단백질 섭취 + 주 3회 헬스" } ],
                 months: [ { name: "1개월차 : 운동 습관", weeks: [ { week: "1주차", goal: "헬스장 3회 출석", desc: "3대 운동 교정" } ] } ],
-                timeline: [ { day: "Day 1 (월) : 하체 운동", tasks: [ { time: "07:00 ~ 08:00", desc: "하체 웨이트" } ] } ]
+                timeline: generateRichTimeline()
             },
             sideincome: {
                 title: "💰 무자본 AI 부업 & 패시브 소득 100일 로드맵",
                 sub: "AI 툴로 콘텐츠 양산 ➔ 무인 전자책 판매로 월 100만 원 수입",
                 master: [ { step: "1단계 (1~30일)", goal: "AI 콘텐츠 세팅", desc: "CapCut 숏폼 30개 제작" } ],
                 months: [ { name: "1개월차 : 숏폼 시딩", weeks: [ { week: "1주차", goal: "채널 세팅", desc: "유튜브, 인스타 가동" } ] } ],
-                timeline: [ { day: "Day 1 (월) : 첫 AI 숏폼", tasks: [ { time: "14:00 ~ 17:00", desc: "숏폼 1호 완성" } ] } ]
+                timeline: generateRichTimeline()
             }
         };
 
-        // 초기 실시간 커뮤니티 피드 예시 데이터
         const INITIAL_FEEDS = [
-            { name: "갓생러민수", badge: "100% 완주 🔥", msg: "오늘 오픽 스크립트 3개 섀도잉 입에 착 붙을 때까지 완등했습니다! 다들 화이팅!", likes: 12, time: "10분 전" },
-            { name: "개발자지망생", badge: "85% 달성 💻", msg: "정처기 기출 2개년 오답 정리 완료. 내일은 알고리즘 풀이 들어갑니다.", likes: 8, time: "25분 전" },
-            { name: "오운완유진", badge: "100% 완주 🏋️", msg: "공복 유산소 40분 + 하체 운동 완등! 갓생 잔디 도트 7개 연속 칠했네요!", likes: 19, time: "1시간 전" }
+            { name: "갓생러민수", badge: "100% 완주 🔥", msg: "오늘 3주차 오픽 섀도잉 입에 착 붙었습니다! 다들 화이팅!", likes: 14, time: "5분 전" },
+            { name: "개발자지망생", badge: "85% 달성 💻", msg: "정처기 2주차 기출 오답 정리 완료. 다음 주차로 넘어갑니다!", likes: 9, time: "18분 전" },
+            { name: "오운완유진", badge: "100% 완주 🏋️", msg: "공복 유산소 40분 완등! 주간 타임라인 다음 주로 넘깁니다!", likes: 21, time: "40분 전" }
         ];
 
         let activeData = null;
@@ -818,17 +824,12 @@
             saveData();
         }
 
-        function openShareModal() {
-            document.getElementById('shareModal').style.display = 'flex';
-        }
-
-        function closeShareModal() {
-            document.getElementById('shareModal').style.display = 'none';
-        }
+        function openShareModal() { document.getElementById('shareModal').style.display = 'flex'; }
+        function closeShareModal() { document.getElementById('shareModal').style.display = 'none'; }
 
         function submitShareFeed() {
             const name = document.getElementById('share-nickname').value.trim() || '익명 갓생러';
-            const msg = document.getElementById('share-msg').value.trim() || '오늘 미션 완료했습니다! 🔥';
+            const msg = document.getElementById('share-msg').value.trim() || '오늘 미션 완수했습니다! 🔥';
 
             let totalTasks = 0, completedTasks = 0;
             activeData.timeline.forEach(t => { t.tasks.forEach(tk => { totalTasks++; if (tk.checked) completedTasks++; }); });
@@ -890,9 +891,7 @@
             container.innerHTML = '';
 
             if (activeData.months.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">등록된 월이 없습니다.</p>';
-                document.getElementById('month-nav-title').innerText = "등록된 월 없음";
-                return;
+                activeData.months.push({ name: "1개월차 : 목표 설정", weeks: [ { week: "1주차", goal: "목표 설정", desc: "할 일 입력" } ] });
             }
 
             if (currentMonthIdx >= activeData.months.length) currentMonthIdx = activeData.months.length - 1;
@@ -941,8 +940,29 @@
             container.appendChild(mBlock);
         }
 
-        function prevMonth() { if (currentMonthIdx > 0) { currentMonthIdx--; renderMonthBlocks(); } }
-        function nextMonth() { if (currentMonthIdx < activeData.months.length - 1) { currentMonthIdx++; renderMonthBlocks(); } }
+        function prevMonth() {
+            if (currentMonthIdx > 0) {
+                currentMonthIdx--;
+                renderMonthBlocks();
+            }
+        }
+
+        /* 🚀 [다음 달 ▶] 누르면 데이터 없어도 무한 자동 생성! */
+        function nextMonth() {
+            if (currentMonthIdx >= activeData.months.length - 1) {
+                const nextMNum = activeData.months.length + 1;
+                activeData.months.push({
+                    name: `${nextMNum}개월차 : 새 월간 목표`,
+                    weeks: [
+                        { week: "1주차", goal: "주간 실천 목표", desc: "할 일을 입력하세요." },
+                        { week: "2주차", goal: "주간 실천 목표", desc: "할 일을 입력하세요." }
+                    ]
+                });
+            }
+            currentMonthIdx++;
+            renderMonthBlocks();
+            saveData();
+        }
 
         function addMonthBlock() {
             const newMNum = activeData.months.length + 1;
@@ -953,7 +973,11 @@
         }
 
         function deleteMonthBlock(mIdx) {
-            if (confirm('이 월 전체를 삭제하시겠습니까?')) { activeData.months.splice(mIdx, 1); renderMonthBlocks(); saveData(); }
+            if (confirm('이 월 전체를 삭제하시겠습니까?')) {
+                activeData.months.splice(mIdx, 1);
+                renderMonthBlocks();
+                saveData();
+            }
         }
 
         function addWeekRow(mIdx) {
@@ -965,27 +989,21 @@
 
         function deleteWeekRow(mIdx, wIdx) { activeData.months[mIdx].weeks.splice(wIdx, 1); renderMonthBlocks(); saveData(); }
 
+        /* ⏰ 주간(Week) 타임라인 렌더링 & 무한 자동 7일 생성 넘김 */
         function renderTimelineCards() {
             const container = document.getElementById('timeline-cards-container');
             container.innerHTML = '';
 
-            if (activeData.timeline.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">등록된 타임라인이 없습니다.</p>';
-                document.getElementById('week-nav-title').innerText = "등록된 타임라인 없음";
-                return;
-            }
-
             const itemsPerPage = 7;
             const totalWeeks = Math.ceil(activeData.timeline.length / itemsPerPage);
 
-            if (currentWeekIdx >= totalWeeks) currentWeekIdx = totalWeeks - 1;
             if (currentWeekIdx < 0) currentWeekIdx = 0;
 
             const startIdx = currentWeekIdx * itemsPerPage;
             const endIdx = Math.min(startIdx + itemsPerPage, activeData.timeline.length);
             const currentWeekItems = activeData.timeline.slice(startIdx, endIdx);
 
-            document.getElementById('week-nav-title').innerText = `Week ${currentWeekIdx + 1} : ${currentWeekIdx + 1}주차 (Day ${startIdx + 1} ~ Day ${endIdx})`;
+            document.getElementById('week-nav-title').innerText = `Week ${currentWeekIdx + 1} : ${currentWeekIdx + 1}주차 타임라인 (Day ${startIdx + 1} ~ Day ${startIdx + currentWeekItems.length})`;
 
             currentWeekItems.forEach((t, relativeIdx) => {
                 const tIdx = startIdx + relativeIdx;
@@ -1032,8 +1050,40 @@
             });
         }
 
-        function prevWeek() { if (currentWeekIdx > 0) { currentWeekIdx--; renderTimelineCards(); } }
-        function nextWeek() { const totalWeeks = Math.ceil(activeData.timeline.length / 7); if (currentWeekIdx < totalWeeks - 1) { currentWeekIdx++; renderTimelineCards(); } }
+        function prevWeek() {
+            if (currentWeekIdx > 0) {
+                currentWeekIdx--;
+                renderTimelineCards();
+            }
+        }
+
+        /* 🚀 [다음 주 ▶] 버튼을 누를 때 7일치가 없더라도 멈추지 않고 즉시 무한 자동 7일 생성! */
+        function nextWeek() {
+            const itemsPerPage = 7;
+            const neededLength = (currentWeekIdx + 2) * itemsPerPage;
+            
+            // 만약 다음 주차(7일) 데이터가 부족하면 즉시 7일치 자동 생성!
+            if (activeData.timeline.length < neededLength) {
+                const currentTotal = activeData.timeline.length;
+                const days = ["월", "화", "수", "목", "금", "토", "일"];
+                for (let i = currentTotal + 1; i <= neededLength; i++) {
+                    const dayName = days[(i - 1) % 7];
+                    const weekNum = Math.ceil(i / 7);
+                    activeData.timeline.push({
+                        day: `Day ${i < 10 ? '0' + i : i} (${weekNum}주차 ${dayName}) : 루틴 실행`,
+                        completed: false,
+                        tasks: [
+                            { time: "08:00 ~ 08:30", desc: `${weekNum}주차 핵심 루틴 / 섀도잉`, checked: false },
+                            { time: "19:00 ~ 20:00", desc: "실전 미션 수행 및 복습", checked: false }
+                        ]
+                    });
+                }
+            }
+            
+            currentWeekIdx++;
+            renderTimelineCards();
+            saveData();
+        }
 
         function addTimelineCard() {
             const dNum = activeData.timeline.length + 1;
@@ -1080,15 +1130,15 @@
         function saveData() {
             activeData.title = document.getElementById('roadmap-hero-title').innerText;
             activeData.sub = document.getElementById('roadmap-hero-sub').innerText;
-            localStorage.setItem('godsaeng_custom_roadmap_v5', JSON.stringify(activeData));
-            localStorage.setItem('godsaeng_community_feeds_v5', JSON.stringify(communityFeeds));
+            localStorage.setItem('godsaeng_custom_roadmap_v6', JSON.stringify(activeData));
+            localStorage.setItem('godsaeng_community_feeds_v6', JSON.stringify(communityFeeds));
         }
 
         function loadData() {
-            localStorage.removeItem('godsaeng_custom_roadmap_v3');
             localStorage.removeItem('godsaeng_custom_roadmap_v4');
-            const saved = localStorage.getItem('godsaeng_custom_roadmap_v5');
-            const savedFeeds = localStorage.getItem('godsaeng_community_feeds_v5');
+            localStorage.removeItem('godsaeng_custom_roadmap_v5');
+            const saved = localStorage.getItem('godsaeng_custom_roadmap_v6');
+            const savedFeeds = localStorage.getItem('godsaeng_community_feeds_v6');
 
             communityFeeds = savedFeeds ? JSON.parse(savedFeeds) : JSON.parse(JSON.stringify(INITIAL_FEEDS));
 
@@ -1112,8 +1162,8 @@
 
         function resetData() {
             if (confirm('모든 편집 내용이 초기화되고 기본 템플릿으로 돌아갑니다.')) {
-                localStorage.removeItem('godsaeng_custom_roadmap_v5');
-                localStorage.removeItem('godsaeng_community_feeds_v5');
+                localStorage.removeItem('godsaeng_custom_roadmap_v6');
+                localStorage.removeItem('godsaeng_community_feeds_v6');
                 applyPreset('english');
             }
         }
