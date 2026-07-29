@@ -113,7 +113,6 @@
         .btn-danger { background: #ffe4e6; color: #e11d48; }
         .btn-danger:hover { background: #fecdd3; }
 
-        /* 📐 2컬럼 레이아웃 (좌: 메인 대시보드 | 우: 사이드 패널) */
         .main-layout {
             display: grid;
             grid-template-columns: 1fr 310px;
@@ -125,7 +124,6 @@
             .main-layout { grid-template-columns: 1fr; }
         }
 
-        /* 💳 메인 콘텐트 카드 */
         .content-card {
             background-color: var(--card-bg);
             border-radius: 20px;
@@ -134,14 +132,12 @@
             border: 1.5px solid var(--border-color);
         }
 
-        /* 👑 사이드바 미니 위젯 패널 */
         .sidebar-panel {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        /* 🏆 달성률 미니 카드 */
         .progress-side-card {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
@@ -174,7 +170,6 @@
             transition: width 0.4s ease;
         }
 
-        /* 🌱 사이드바 아기자기 미니 잔디밭 위젯 */
         .side-widget-card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -193,7 +188,6 @@
             color: var(--text-main);
         }
 
-        /* 아기자기 콤팩트 미니 잔디 (12px x 12px 도트) */
         .mini-grass-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -217,7 +211,6 @@
         .mini-grass-cell.active-3 { background-color: #4ade80; }
         .mini-grass-cell.active-4 { background-color: #22c55e; }
 
-        /* 📌 탭 메뉴 */
         .tab-bar {
             display: flex;
             gap: 6px;
@@ -250,7 +243,6 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* 👑 배너 */
         .hero-banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
             color: #ffffff !important;
@@ -281,11 +273,6 @@
             color: #0f172a !important;
             box-shadow: 0 0 0 2px #3b82f6 !important;
             cursor: pointer;
-        }
-        .hero-banner .editable:hover {
-            background-color: rgba(255, 255, 255, 0.15) !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 0 2px #60a5fa !important;
         }
 
         .section-header-bar {
@@ -351,10 +338,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .display-nav-title {
-            font-size: 15px;
-            font-weight: 800;
-        }
+        .display-nav-title { font-size: 15px; font-weight: 800; }
 
         .dynamic-card {
             border: 1.5px solid var(--border-color);
@@ -395,6 +379,86 @@
 
         .custom-cb { width: 17px; height: 17px; cursor: pointer; accent-color: #2563eb; }
 
+        /* 📸 커뮤니티 갓생 인증 피드 스타일 */
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .feed-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feed-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .feed-badge {
+            background: #10b981;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-left: auto;
+        }
+
+        .feed-content {
+            font-size: 13px;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .feed-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            color: var(--text-sub);
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+        }
+
+        .like-btn {
+            background: #ffe4e6;
+            color: #e11d48;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 11.5px;
+        }
+
+        /* 모달 팝업 */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -410,7 +474,7 @@
             color: #0f172a;
             padding: 24px;
             border-radius: 20px;
-            max-width: 360px;
+            max-width: 380px;
             width: 90%;
             text-align: center;
         }
@@ -438,14 +502,6 @@
         .insta-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
         .insta-percent { font-size: 34px; font-weight: 900; margin: 10px 0; color: #ffeb3b; }
         .insta-footer { font-size: 11px; opacity: 0.9; font-weight: 700; }
-
-        @media print {
-            body { background: white !important; padding: 0 !important; }
-            .header-nav, .tab-bar, .btn-action-sm, .nav-switch-bar, .sidebar-panel { display: none !important; }
-            .main-layout { grid-template-columns: 1fr !important; }
-            .content-card { box-shadow: none !important; border: none !important; padding: 0 !important; }
-            .tab-content { display: block !important; }
-        }
     </style>
 </head>
 <body>
@@ -456,7 +512,7 @@
         <div class="header-nav">
             <div class="brand-logo">
                 <span>🎯</span>
-                <span><strong>갓생 메이커</strong> (사이드 미니 잔디 대시보드)</span>
+                <span><strong>갓생 메이커</strong> (공유 인증 피드 대시보드)</span>
             </div>
             <div class="preset-select-group">
                 <label for="presetSelect" style="font-size: 13px; font-weight: 700;">추천 템플릿:</label>
@@ -485,7 +541,8 @@
                 <div class="tab-bar">
                     <button class="tab-btn active" onclick="openTab('tab1', this)">🗓️ 마스터 로드맵</button>
                     <button class="tab-btn" onclick="openTab('tab2', this)">📅 달별(Month) 스케줄</button>
-                    <button class="tab-btn" onclick="openTab('tab3', this)">⏰ 주간(Week) 세부 타임라인</button>
+                    <button class="tab-btn" onclick="openTab('tab3', this)">⏰ 주간(Week) 타임라인</button>
+                    <button class="tab-btn" style="color: #ec4899; font-weight: 800;" onclick="openTab('tab4', this)">🔥 실시간 갓생 인증 피드</button>
                 </div>
 
                 <!-- TAB 1: 마스터 로드맵 -->
@@ -549,9 +606,22 @@
                         <!-- 동적 타임라인 카드 영역 -->
                     </div>
                 </div>
+
+                <!-- TAB 4: 🔥 실시간 갓생러 공유 인증 피드 (Community Auth Wall) -->
+                <div id="tab4" class="tab-content">
+                    <div class="section-header-bar">
+                        <div class="section-title">🔥 갓생러 실시간 공유 인증 피드</div>
+                        <button class="btn btn-primary btn-action-sm" onclick="openShareModal()">📸 오늘 갓생 인증샷 올리기</button>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-sub); margin-top: -6px;">다른 갓생러들의 실시간 목표 달성 인증샷을 함께 보고 응원해 보세요!</p>
+
+                    <div class="feed-grid" id="community-feed-grid">
+                        <!-- 실시간 갓생 인증 카드 동적 생성 -->
+                    </div>
+                </div>
             </div>
 
-            <!-- 우측 사이드 위젯 패널 (아기자기 미니 잔디 및 완주 지표) -->
+            <!-- 우측 사이드 위젯 패널 -->
             <div class="sidebar-panel">
 
                 <!-- 🏆 달성률 미니 카드 -->
@@ -576,11 +646,11 @@
                     </div>
                 </div>
 
-                <!-- 📸 인스타 인증 버튼 미니 카드 -->
-                <div class="side-widget-card" style="text-align: center; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #bfdbfe;">
-                    <div style="font-size: 13px; font-weight: 800; color: #1e40af; margin-bottom: 6px;">📸 오늘 갓생 인증샷</div>
-                    <p style="font-size: 11.5px; color: #1e3a8a; margin: 0 0 10px 0;">인스타그램 스토리에 자랑해 보세요!</p>
-                    <button class="btn btn-primary" style="width: 100%; font-size: 12px; padding: 6px;" onclick="openInstaModal()">스토리 카드 보기</button>
+                <!-- 📸 공유 인증 게시판 바로가기 미니 카드 -->
+                <div class="side-widget-card" style="text-align: center; background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-color: #fbcfe8;">
+                    <div style="font-size: 13px; font-weight: 800; color: #be185d; margin-bottom: 6px;">🔥 갓생러 공유 인증 피드</div>
+                    <p style="font-size: 11.5px; color: #9d174d; margin: 0 0 10px 0;">오늘 달성한 갓생 인증샷 공유하기!</p>
+                    <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 6px;" onclick="openShareModal()">인증샷 게시판에 올리기</button>
                 </div>
 
             </div>
@@ -603,6 +673,19 @@
         </div>
     </div>
 
+    <!-- 📤 커뮤니티 인증샷 올리기 모달 -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="modal-card">
+            <h3 style="margin-top: 0; font-size: 16px; color: #0f172a;">📸 갓생 공유 피드에 인증샷 올리기</h3>
+            <input type="text" id="share-nickname" placeholder="닉네임 (예: 갓생살자)" style="width: 100%; padding: 8px 12px; margin-bottom: 10px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13px;">
+            <textarea id="share-msg" placeholder="오늘 달성한 소감 & 한줄 각오를 적어주세요! (예: 오픽 30분 스피킹 완주 성공! 🔥)" style="width: 100%; height: 70px; padding: 8px 12px; margin-bottom: 14px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13px; resize: none;"></textarea>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeShareModal()">취소</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="submitShareFeed()">🚀 인증 피드 게시</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const PRESETS = {
             english: {
@@ -617,33 +700,23 @@
                     { name: "1개월차 : 기초 패턴 & 섀도잉", weeks: [
                         { week: "1주차", goal: "기초 동사 30개 패턴", desc: "Be동사 및 핵심 패턴 음성 녹음" },
                         { week: "2주차", goal: "미드 섀도잉 10분", desc: "미드 1편 10초 분량 100번 따라하기" }
-                    ]},
-                    { name: "2개월차 : 실전 회화 & 시험", weeks: [
-                        { week: "3주차", goal: "롤플레이 템플릿", desc: "상황극 표현 15개 암기" },
-                        { week: "4주차", goal: "오픽 시험 & AL 취득", desc: "모의고사 풀이 후 AL 취득" }
                     ]}
                 ],
                 timeline: [
                     { day: "Day 1 (월) : 영어 스피킹 루틴 스타트", tasks: [
                         { time: "08:00 ~ 08:30", desc: "출근길 팟캐스트 섀도잉" },
-                        { time: "19:00 ~ 20:00", desc: "ChatGPT 음성 대화 30분" },
-                        { time: "22:00 ~ 22:30", desc: "영어 일기 작성" }
+                        { time: "19:00 ~ 20:00", desc: "ChatGPT 음성 대화 30분" }
                     ]},
                     { day: "Day 2 (화) : 미드 섀도잉 훈련", tasks: [
                         { time: "08:00 ~ 08:30", desc: "핵심 표현 3개 복습" },
                         { time: "19:00 ~ 20:00", desc: "미드 섀도잉 훈련" }
-                    ]},
-                    { day: "Day 3 (수) : 패턴 암기", tasks: [ { time: "19:00 ~ 20:00", desc: "AI 스피킹 30분" } ] },
-                    { day: "Day 4 (목) : 롤플레이 실습", tasks: [ { time: "19:00 ~ 20:00", desc: "상황극 실습" } ] },
-                    { day: "Day 5 (금) : 주간 복습", tasks: [ { time: "19:00 ~ 20:00", desc: "핵심표현 정리" } ] },
-                    { day: "Day 6 (토) : 원어민 섀도잉", tasks: [ { time: "10:00 ~ 11:00", desc: "미드 섀도잉" } ] },
-                    { day: "Day 7 (일) : 주간 완주 휴식", tasks: [ { time: "21:00 ~ 21:30", desc: "다음주 스케줄 점검" } ] }
+                    ]}
                 ]
             },
             career: {
                 title: "💼 정보처리기사 & 이직 포트폴리오 90일 합격 로드맵",
-                sub: "필기 3주 ➔ 실기 4주 ➔ 포트폴리오 3주로 서류 합격률 80% 달성",
-                master: [ { step: "1단계 (1~30일)", goal: "자격증 필기 합격", desc: "CBT 기출문제 5개년 3회독" } ],
+                sub: "필기 3주 ➔ 실기 4주 ➔ 포트폴리오 3주로 합격률 80% 달성",
+                master: [ { step: "1단계 (1~30일)", goal: "자격증 필기 합격", desc: "CBT 기출 5개년 3회독" } ],
                 months: [ { name: "1개월차 : 필기 합격", weeks: [ { week: "1주차", goal: "기출 1~2개년", desc: "기출 오답 정리" } ] } ],
                 timeline: [ { day: "Day 1 (월) : 기출 풀기", tasks: [ { time: "20:00 ~ 22:00", desc: "CBT 기출 풀기" } ] } ]
             },
@@ -656,14 +729,22 @@
             },
             sideincome: {
                 title: "💰 무자본 AI 부업 & 패시브 소득 100일 로드맵",
-                sub: "AI 툴로 콘텐츠 양산 ➔ 전자책 무인 판매로 월 100만 원 수입",
+                sub: "AI 툴로 콘텐츠 양산 ➔ 무인 전자책 판매로 월 100만 원 수입",
                 master: [ { step: "1단계 (1~30일)", goal: "AI 콘텐츠 세팅", desc: "CapCut 숏폼 30개 제작" } ],
                 months: [ { name: "1개월차 : 숏폼 시딩", weeks: [ { week: "1주차", goal: "채널 세팅", desc: "유튜브, 인스타 가동" } ] } ],
                 timeline: [ { day: "Day 1 (월) : 첫 AI 숏폼", tasks: [ { time: "14:00 ~ 17:00", desc: "숏폼 1호 완성" } ] } ]
             }
         };
 
+        // 초기 실시간 커뮤니티 피드 예시 데이터
+        const INITIAL_FEEDS = [
+            { name: "갓생러민수", badge: "100% 완주 🔥", msg: "오늘 오픽 스크립트 3개 섀도잉 입에 착 붙을 때까지 완등했습니다! 다들 화이팅!", likes: 12, time: "10분 전" },
+            { name: "개발자지망생", badge: "85% 달성 💻", msg: "정처기 기출 2개년 오답 정리 완료. 내일은 알고리즘 풀이 들어갑니다.", likes: 8, time: "25분 전" },
+            { name: "오운완유진", badge: "100% 완주 🏋️", msg: "공복 유산소 40분 + 하체 운동 완등! 갓생 잔디 도트 7개 연속 칠했네요!", likes: 19, time: "1시간 전" }
+        ];
+
         let activeData = null;
+        let communityFeeds = [];
         let currentMonthIdx = 0;
         let currentWeekIdx = 0;
 
@@ -702,7 +783,71 @@
             renderMonthBlocks();
             renderTimelineCards();
             renderMiniGrassGrid();
+            renderCommunityFeeds();
             updateProgress();
+        }
+
+        function renderCommunityFeeds() {
+            const grid = document.getElementById('community-feed-grid');
+            grid.innerHTML = '';
+
+            communityFeeds.forEach((f, idx) => {
+                const card = document.createElement('div');
+                card.className = 'feed-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="feed-user">
+                            <div class="avatar">${f.name.charAt(0)}</div>
+                            <span>${f.name}</span>
+                            <span class="feed-badge">${f.badge}</span>
+                        </div>
+                        <div class="feed-content">${f.msg}</div>
+                    </div>
+                    <div class="feed-footer">
+                        <span>${f.time}</span>
+                        <button class="like-btn" onclick="addLike(${idx})">❤️ 응원 ${f.likes}</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addLike(idx) {
+            communityFeeds[idx].likes++;
+            renderCommunityFeeds();
+            saveData();
+        }
+
+        function openShareModal() {
+            document.getElementById('shareModal').style.display = 'flex';
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').style.display = 'none';
+        }
+
+        function submitShareFeed() {
+            const name = document.getElementById('share-nickname').value.trim() || '익명 갓생러';
+            const msg = document.getElementById('share-msg').value.trim() || '오늘 미션 완료했습니다! 🔥';
+
+            let totalTasks = 0, completedTasks = 0;
+            activeData.timeline.forEach(t => { t.tasks.forEach(tk => { totalTasks++; if (tk.checked) completedTasks++; }); });
+            const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 100;
+
+            communityFeeds.unshift({
+                name: name,
+                badge: `${percent}% 완주 ✨`,
+                msg: msg,
+                likes: 1,
+                time: "방금 전"
+            });
+
+            document.getElementById('share-nickname').value = '';
+            document.getElementById('share-msg').value = '';
+            closeShareModal();
+            renderCommunityFeeds();
+            saveData();
+            openTab('tab4', document.querySelectorAll('.tab-btn')[3]);
         }
 
         function renderMiniGrassGrid() {
@@ -729,7 +874,7 @@
         }
 
         function addMasterRow() {
-            activeData.master.push({ step: "새 단계", goal: "새 목표", desc: "세부 설명을 입력하세요." });
+            activeData.master.push({ step: "새 단계", goal: "새 목표", desc: "세부 설명 입력" });
             renderAll();
             saveData();
         }
@@ -796,31 +941,19 @@
             container.appendChild(mBlock);
         }
 
-        function prevMonth() {
-            if (currentMonthIdx > 0) { currentMonthIdx--; renderMonthBlocks(); }
-        }
-
-        function nextMonth() {
-            if (currentMonthIdx < activeData.months.length - 1) { currentMonthIdx++; renderMonthBlocks(); }
-        }
+        function prevMonth() { if (currentMonthIdx > 0) { currentMonthIdx--; renderMonthBlocks(); } }
+        function nextMonth() { if (currentMonthIdx < activeData.months.length - 1) { currentMonthIdx++; renderMonthBlocks(); } }
 
         function addMonthBlock() {
             const newMNum = activeData.months.length + 1;
-            activeData.months.push({
-                name: `${newMNum}개월차 : 새 목표`,
-                weeks: [ { week: "1주차", goal: "주간 목표", desc: "할 일 입력" } ]
-            });
+            activeData.months.push({ name: `${newMNum}개월차 : 새 목표`, weeks: [ { week: "1주차", goal: "주간 목표", desc: "할 일 입력" } ] });
             currentMonthIdx = activeData.months.length - 1;
             renderMonthBlocks();
             saveData();
         }
 
         function deleteMonthBlock(mIdx) {
-            if (confirm('이 월(Month) 전체를 삭제하시겠습니까?')) {
-                activeData.months.splice(mIdx, 1);
-                renderMonthBlocks();
-                saveData();
-            }
+            if (confirm('이 월 전체를 삭제하시겠습니까?')) { activeData.months.splice(mIdx, 1); renderMonthBlocks(); saveData(); }
         }
 
         function addWeekRow(mIdx) {
@@ -830,11 +963,7 @@
             saveData();
         }
 
-        function deleteWeekRow(mIdx, wIdx) {
-            activeData.months[mIdx].weeks.splice(wIdx, 1);
-            renderMonthBlocks();
-            saveData();
-        }
+        function deleteWeekRow(mIdx, wIdx) { activeData.months[mIdx].weeks.splice(wIdx, 1); renderMonthBlocks(); saveData(); }
 
         function renderTimelineCards() {
             const container = document.getElementById('timeline-cards-container');
@@ -903,22 +1032,12 @@
             });
         }
 
-        function prevWeek() {
-            if (currentWeekIdx > 0) { currentWeekIdx--; renderTimelineCards(); }
-        }
-
-        function nextWeek() {
-            const totalWeeks = Math.ceil(activeData.timeline.length / 7);
-            if (currentWeekIdx < totalWeeks - 1) { currentWeekIdx++; renderTimelineCards(); }
-        }
+        function prevWeek() { if (currentWeekIdx > 0) { currentWeekIdx--; renderTimelineCards(); } }
+        function nextWeek() { const totalWeeks = Math.ceil(activeData.timeline.length / 7); if (currentWeekIdx < totalWeeks - 1) { currentWeekIdx++; renderTimelineCards(); } }
 
         function addTimelineCard() {
             const dNum = activeData.timeline.length + 1;
-            activeData.timeline.push({
-                day: `Day ${dNum} : 새 일정`,
-                completed: false,
-                tasks: [ { time: "09:00 ~ 10:00", desc: "할 일을 입력하세요.", checked: false } ]
-            });
+            activeData.timeline.push({ day: `Day ${dNum} : 새 일정`, completed: false, tasks: [ { time: "09:00 ~ 10:00", desc: "할 일 입력", checked: false } ] });
             currentWeekIdx = Math.floor((activeData.timeline.length - 1) / 7);
             renderTimelineCards();
             renderMiniGrassGrid();
@@ -926,81 +1045,30 @@
             saveData();
         }
 
-        function deleteTimelineCard(tIdx) {
-            activeData.timeline.splice(tIdx, 1);
-            renderTimelineCards();
-            renderMiniGrassGrid();
-            updateProgress();
-            saveData();
-        }
-
-        function addTaskRow(tIdx) {
-            activeData.timeline[tIdx].tasks.push({ time: "시간대 입력", desc: "새 할 일", checked: false });
-            renderTimelineCards();
-            updateProgress();
-            saveData();
-        }
-
-        function deleteTaskRow(tIdx, tkIdx) {
-            activeData.timeline[tIdx].tasks.splice(tkIdx, 1);
-            renderTimelineCards();
-            updateProgress();
-            saveData();
-        }
-
-        function toggleTaskCheck(tIdx, tkIdx, cb) {
-            activeData.timeline[tIdx].tasks[tkIdx].checked = cb.checked;
-            renderTimelineCards();
-            renderMiniGrassGrid();
-            updateProgress();
-            saveData();
-        }
-
-        function toggleCardComplete(tIdx) {
-            const isComp = activeData.timeline[tIdx].completed;
-            activeData.timeline[tIdx].completed = !isComp;
-            activeData.timeline[tIdx].tasks.forEach(tk => tk.checked = !isComp);
-            renderTimelineCards();
-            renderMiniGrassGrid();
-            updateProgress();
-            saveData();
-        }
+        function deleteTimelineCard(tIdx) { activeData.timeline.splice(tIdx, 1); renderTimelineCards(); renderMiniGrassGrid(); updateProgress(); saveData(); }
+        function addTaskRow(tIdx) { activeData.timeline[tIdx].tasks.push({ time: "시간대 입력", desc: "새 할 일", checked: false }); renderTimelineCards(); updateProgress(); saveData(); }
+        function deleteTaskRow(tIdx, tkIdx) { activeData.timeline[tIdx].tasks.splice(tkIdx, 1); renderTimelineCards(); updateProgress(); saveData(); }
+        function toggleTaskCheck(tIdx, tkIdx, cb) { activeData.timeline[tIdx].tasks[tkIdx].checked = cb.checked; renderTimelineCards(); renderMiniGrassGrid(); updateProgress(); saveData(); }
+        function toggleCardComplete(tIdx) { const isComp = activeData.timeline[tIdx].completed; activeData.timeline[tIdx].completed = !isComp; activeData.timeline[tIdx].tasks.forEach(tk => tk.checked = !isComp); renderTimelineCards(); renderMiniGrassGrid(); updateProgress(); saveData(); }
 
         function updateProgress() {
-            let totalTasks = 0;
-            let completedTasks = 0;
-
-            activeData.timeline.forEach(t => {
-                t.tasks.forEach(tk => {
-                    totalTasks++;
-                    if (tk.checked) completedTasks++;
-                });
-            });
-
+            let totalTasks = 0, completedTasks = 0;
+            activeData.timeline.forEach(t => { t.tasks.forEach(tk => { totalTasks++; if (tk.checked) completedTasks++; }); });
             const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
             document.getElementById('progress-bar').style.width = percent + '%';
             document.getElementById('progress-text').innerText = `${completedTasks} / ${totalTasks} (${percent}%)`;
         }
 
         function openInstaModal() {
-            let totalTasks = 0;
-            let completedTasks = 0;
-            activeData.timeline.forEach(t => {
-                t.tasks.forEach(tk => {
-                    totalTasks++;
-                    if (tk.checked) completedTasks++;
-                });
-            });
+            let totalTasks = 0, completedTasks = 0;
+            activeData.timeline.forEach(t => { t.tasks.forEach(tk => { totalTasks++; if (tk.checked) completedTasks++; }); });
             const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-
             document.getElementById('modal-title').innerText = activeData.title.split(' ')[0] + ' ' + activeData.title.split(' ')[1];
             document.getElementById('modal-percent').innerText = `${percent}%`;
             document.getElementById('instaModal').style.display = 'flex';
         }
 
-        function closeInstaModal() {
-            document.getElementById('instaModal').style.display = 'none';
-        }
+        function closeInstaModal() { document.getElementById('instaModal').style.display = 'none'; }
 
         function openTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -1012,13 +1080,18 @@
         function saveData() {
             activeData.title = document.getElementById('roadmap-hero-title').innerText;
             activeData.sub = document.getElementById('roadmap-hero-sub').innerText;
-            localStorage.setItem('godsaeng_custom_roadmap_v4', JSON.stringify(activeData));
+            localStorage.setItem('godsaeng_custom_roadmap_v5', JSON.stringify(activeData));
+            localStorage.setItem('godsaeng_community_feeds_v5', JSON.stringify(communityFeeds));
         }
 
         function loadData() {
-            localStorage.removeItem('godsaeng_custom_roadmap_v2');
             localStorage.removeItem('godsaeng_custom_roadmap_v3');
-            const saved = localStorage.getItem('godsaeng_custom_roadmap_v4');
+            localStorage.removeItem('godsaeng_custom_roadmap_v4');
+            const saved = localStorage.getItem('godsaeng_custom_roadmap_v5');
+            const savedFeeds = localStorage.getItem('godsaeng_community_feeds_v5');
+
+            communityFeeds = savedFeeds ? JSON.parse(savedFeeds) : JSON.parse(JSON.stringify(INITIAL_FEEDS));
+
             if (saved) {
                 activeData = JSON.parse(saved);
                 renderAll();
@@ -1039,7 +1112,8 @@
 
         function resetData() {
             if (confirm('모든 편집 내용이 초기화되고 기본 템플릿으로 돌아갑니다.')) {
-                localStorage.removeItem('godsaeng_custom_roadmap_v4');
+                localStorage.removeItem('godsaeng_custom_roadmap_v5');
+                localStorage.removeItem('godsaeng_community_feeds_v5');
                 applyPreset('english');
             }
         }
